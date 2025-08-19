@@ -116,7 +116,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 3:
                         for i in range(3):
-                            tabuleiro_bot[linha - i][coluna] = "☤"
+                            tabuleiro_bot[linha - i][coluna] = "★"
                         break
             elif direcao == 'direita':
                 if coluna <= 7:
@@ -126,7 +126,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 3:
                         for i in range(3):
-                            tabuleiro_bot[linha][coluna + i] = "☤"
+                            tabuleiro_bot[linha][coluna + i] = "★"
                         break
             elif direcao == 'baixo':
                 if linha <= 7:
@@ -136,7 +136,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 3:
                         for i in range(3):
-                            tabuleiro_bot[linha + i][coluna] = "☤"
+                            tabuleiro_bot[linha + i][coluna] = "★"
                         break           
             else:
                 if coluna >= 2:
@@ -146,7 +146,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 3:
                         for i in range(3):
-                            tabuleiro_bot[linha][coluna - i] = "☤"
+                            tabuleiro_bot[linha][coluna - i] = "★"
                         break  
 
     for _ in range(2):
@@ -163,7 +163,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 2:
                         for i in range(2):
-                            tabuleiro_bot[linha - i][coluna] = "☸"
+                            tabuleiro_bot[linha - i][coluna] = "✽"
                         break
             elif direcao == 'direita':
                 if coluna <= 8:
@@ -173,7 +173,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 2:
                         for i in range(2):
-                            tabuleiro_bot[linha][coluna + i] = "☸"
+                            tabuleiro_bot[linha][coluna + i] = "✽"
                         break
             elif direcao == 'baixo':
                 if linha <= 8:
@@ -183,7 +183,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 2:
                         for i in range(2):
-                            tabuleiro_bot[linha + i][coluna] = "☸"
+                            tabuleiro_bot[linha + i][coluna] = "✽"
                         break           
             else:
                 if coluna >= 1:
@@ -193,7 +193,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 2:
                         for i in range(2):
-                            tabuleiro_bot[linha][coluna - i] = "☸"
+                            tabuleiro_bot[linha][coluna - i] = "✽"
                         break 
 
     # 3 Navios de 1 célula
@@ -211,7 +211,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 1:
                         for i in range(1):
-                            tabuleiro_bot[linha - i][coluna] = "☠"
+                            tabuleiro_bot[linha - i][coluna] = "✚"
                         break
             elif direcao == 'direita':
                 if coluna <= 9:
@@ -221,7 +221,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 1:
                         for i in range(1):
-                            tabuleiro_bot[linha][coluna + i] = "☠"
+                            tabuleiro_bot[linha][coluna + i] = "✚"
                         break
             elif direcao == 'baixo':
                 if linha <= 9:
@@ -231,7 +231,7 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 1:
                         for i in range(1):
-                            tabuleiro_bot[linha + i][coluna] = "☠"
+                            tabuleiro_bot[linha + i][coluna] = "✚"
                         break           
             else:
                 if coluna >= 0:
@@ -241,6 +241,6 @@ def gerar_tabuleiro_bot() -> list[list[str]]:
                             conta_passos += 1
                     if conta_passos == 1:
                         for i in range(1):
-                            tabuleiro_bot[linha][coluna - i] = "☠"
+                            tabuleiro_bot[linha][coluna - i] = "✚"
                         break
     return tabuleiro_bot
