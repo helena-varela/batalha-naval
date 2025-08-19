@@ -1,6 +1,7 @@
 import os
 import time
 import tabuleiro as tb
+import bot 
 
 TAM_LINHA_TERMINAL=30
 
@@ -91,16 +92,13 @@ if __name__ == "__main__":
             escrever_linha()
             print("3 NAVIOS DE 1 CÉLULA")
             escrever_linha(True)
-            preparar_tabuleiro()    
+            preparar_tabuleiro()   
+        
+        tabuleiro_inimigo = bot.gerar_tabuleiro_bot()
         
     elif escolha == 2:
         ...
+
     elif escolha == 3:
         ...
 
-# Etica e dados 35N34
-# IA aplicada a educação 35N12 das 6:40 ~ 22:10
-
-# Apendrizado profundo
-# Apendizado por refroço
-# IA para jogos 1
