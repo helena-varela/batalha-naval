@@ -21,15 +21,15 @@ def limpar_terminal(tempo=0):
     else: 
         os.system('clear')
 
-def preparar_tabuleiro():
+def preparar_tabuleiro(simbolo):
     tb.imprimir_tabuleiro_bonito(tabuleiro)
     celula = input("Selecione uma célula (ex: A1): ").strip().upper()
     x = ord(celula[0]) - 65 
     y = int(celula[1])
 
-    print(f"Você selecionou a célula: {input} (x={x}, y={y})")
+    print(f"Você selecionou a célula: {celula} (x={x}, y={y})")
 
-    tabuleiro[y][x] = "X"
+    tabuleiro[y][x] = simbolo
     tb.imprimir_tabuleiro_bonito(tabuleiro)
 
     limpar_terminal(1)
@@ -68,34 +68,58 @@ if __name__ == "__main__":
             escrever_linha()
             print("NAVIO DE 5 CÉLULAS")
             escrever_linha(True)
-            preparar_tabuleiro()
+            preparar_tabuleiro("✈")
 
         for i in range(4):
             escrever_linha()
             print("NAVIO DE 4 CÉLULAS")
             escrever_linha(True)
-            preparar_tabuleiro()
+            preparar_tabuleiro("☢")
 
         for i in range(6):
             escrever_linha()
             print("2 NAVIOS DE 3 CÉLULAS")
             escrever_linha(True)
-            preparar_tabuleiro()
+            preparar_tabuleiro("★")
 
         for i in range(4):
             escrever_linha()
             print("2 NAVIOS DE 2 CÉLULAS")
             escrever_linha(True)
-            preparar_tabuleiro()
+            preparar_tabuleiro("✽")
 
         for i in range(3):
             escrever_linha()
             print("3 NAVIOS DE 1 CÉLULA")
             escrever_linha(True)
-            preparar_tabuleiro()   
+            preparar_tabuleiro("✚")
         
         tabuleiro_inimigo = bot.gerar_tabuleiro_bot()
-        
+        tb.imprimir_tabuleiro_bonito(tabuleiro_inimigo)
+        tabuleiro_espelho_inimigo = tb.criar_tabuleiro()
+
+        # Iniciando o jogo
+        escrever_linha(True)
+        print("Começando a partida!")
+        escrever_linha(True)
+
+        navios = 0
+        while navios != 22:
+                limpar_terminal()
+                tb.imprimir_tabuleiro_bonito(tabuleiro_espelho_inimigo)
+                celula = input("Selecione uma célula (ex: A1): ").strip().upper()
+                x = ord(celula[0]) - 65 
+                y = int(celula[1])
+
+                if (tabuleiro_inimigo[y][x] == " "):
+                    tabuleiro_espelho_inimigo[y][x] = "O"
+                else:
+                    if tabuleiro_espelho_inimigo[y][x] == " ":
+                        tabuleiro_espelho_inimigo[y][x] = tabuleiro_inimigo[y][x]
+                        navios += 1
+                        if navios == 22:
+                            print("Parabéns você ganhou a partida! :D")
+                    
     elif escolha == 2:
         ...
 
