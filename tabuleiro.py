@@ -2,7 +2,7 @@ def criar_tabuleiro(linhas=10, colunas=10):
     """Cria uma matriz 10x10 preenchida com pontos"""
     return [[' ' for _ in range(colunas)] for _ in range(linhas)]
 
-def imprimir_tabuleiro_bonito(tabuleiro):
+def imprimir_tabuleiro_bonito(tabuleiro: list[list[str]]):
     """Versão com bordas estilizadas"""
     letras = [chr(i) for i in range(65, 75)]
     
