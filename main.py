@@ -2,9 +2,9 @@ import os
 import time
 import tabuleiro as tb
 import bot 
+import random
 
 TAM_LINHA_TERMINAL=30
-
 
 def escrever_linha(quebra_antes=False):
     """Escreve uma linha de separação no terminal"""
@@ -21,7 +21,7 @@ def limpar_terminal(tempo=0):
     else: 
         os.system('clear')
 
-def preparar_tabuleiro(simbolo):
+def preparar_tabuleiro(tabuleiro, simbolo):
     tb.imprimir_tabuleiro_bonito(tabuleiro)
     celula = input("Selecione uma célula (ex: A1): ").strip().upper()
     x = ord(celula[0]) - 65 
@@ -32,7 +32,7 @@ def preparar_tabuleiro(simbolo):
     tabuleiro[y][x] = simbolo
     tb.imprimir_tabuleiro_bonito(tabuleiro)
 
-    limpar_terminal(1)
+    limpar_terminal()
 
 if __name__ == "__main__":
     limpar_terminal()
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     limpar_terminal(3)
 
     escrever_linha()
-    jogador_nome = input("Digite seu nome: ").strip().capitalize()
+    jogador_nome = input("Digite seu nome: ").strip().title()
     escrever_linha(quebra_antes=True)
 
     limpar_terminal(1)
@@ -62,67 +62,100 @@ if __name__ == "__main__":
     limpar_terminal(1)
     
     if escolha == 1:
-        tabuleiro = tb.criar_tabuleiro()
+        escrever_linha()
+        print("Você deseja montar seu próprio tabuleiro caso contrário criaremos um pra você (s/n)")
+        escrever_linha(True)
+        opcao = input().lower()
+        if opcao == "s":
+            tabuleiro_jogador = tb.criar_tabuleiro() # tabuleiro do jogador
 
-        for i in range(5):
-            escrever_linha()
-            print("NAVIO DE 5 CÉLULAS")
-            escrever_linha(True)
-            preparar_tabuleiro("✈")
+            for i in range(5):
+                escrever_linha()
+                print("NAVIO DE 5 CÉLULAS")
+                escrever_linha(True)
+                preparar_tabuleiro(tabuleiro_jogador, "✈")
 
-        for i in range(4):
-            escrever_linha()
-            print("NAVIO DE 4 CÉLULAS")
-            escrever_linha(True)
-            preparar_tabuleiro("☢")
+            for i in range(4):
+                escrever_linha()
+                print("NAVIO DE 4 CÉLULAS")
+                escrever_linha(True)
+                preparar_tabuleiro(tabuleiro_jogador, "☢")
 
-        for i in range(6):
-            escrever_linha()
-            print("2 NAVIOS DE 3 CÉLULAS")
-            escrever_linha(True)
-            preparar_tabuleiro("★")
+            for i in range(6):
+                escrever_linha()
+                print("2 NAVIOS DE 3 CÉLULAS")
+                escrever_linha(True)
+                preparar_tabuleiro(tabuleiro_jogador, "★")
 
-        for i in range(4):
-            escrever_linha()
-            print("2 NAVIOS DE 2 CÉLULAS")
-            escrever_linha(True)
-            preparar_tabuleiro("✽")
+            for i in range(4):
+                escrever_linha()
+                print("2 NAVIOS DE 2 CÉLULAS")
+                escrever_linha(True)
+                preparar_tabuleiro(tabuleiro_jogador, "✽")
 
-        for i in range(3):
-            escrever_linha()
-            print("3 NAVIOS DE 1 CÉLULA")
-            escrever_linha(True)
-            preparar_tabuleiro("✚")
+            for i in range(3):
+                escrever_linha()
+                print("3 NAVIOS DE 1 CÉLULA")
+                escrever_linha(True)
+                preparar_tabuleiro(tabuleiro_jogador, "✚")
+        elif opcao == "n":
+            tabuleiro_jogador = bot.gerar_tabuleiro_bot()
         
-        tabuleiro_inimigo = bot.gerar_tabuleiro_bot()
-        tb.imprimir_tabuleiro_bonito(tabuleiro_inimigo)
-        tabuleiro_espelho_inimigo = tb.criar_tabuleiro()
+        tabuleiro_inimigo = bot.gerar_tabuleiro_bot() # tabuleiro do bot
+        tabuleiro_espelho_inimigo = tb.criar_tabuleiro() # tabuleiro sem nenhuma peça do bot
+        tabuleiro_espelho_jogador = tb.criar_tabuleiro() # tabuleiro sem nenhuma peça do jogador
 
         # Iniciando o jogo
         escrever_linha(True)
         print("Começando a partida!")
         escrever_linha(True)
 
-        navios = 0
-        while navios != 22:
-                limpar_terminal()
-                tb.imprimir_tabuleiro_bonito(tabuleiro_espelho_inimigo)
-                celula = input("Selecione uma célula (ex: A1): ").strip().upper()
-                x = ord(celula[0]) - 65 
-                y = int(celula[1])
+        navios_jogador = 0
+        navios_bot = 0
+        while navios_jogador != 22 and navios_bot != 22:
+            limpar_terminal()
+            print("Tabuleiro espelho jogador")
+            tb.imprimir_tabuleiro_bonito(tabuleiro_espelho_jogador)
+            print("\nNavios derrubados: ", navios_bot)
 
-                if (tabuleiro_inimigo[y][x] == " "):
-                    tabuleiro_espelho_inimigo[y][x] = "O"
+            # Round do bot
+            acertou = False
+            while not acertou:
+                linha = random.randint(0, 9)
+                coluna = random.randint(0, 9)
+                if (tabuleiro_jogador[linha][coluna] == " "):
+                    tabuleiro_espelho_jogador[linha][coluna] = "O"
+                    acertou = True
                 else:
-                    if tabuleiro_espelho_inimigo[y][x] == " ":
-                        tabuleiro_espelho_inimigo[y][x] = tabuleiro_inimigo[y][x]
-                        navios += 1
-                        if navios == 22:
-                            print("Parabéns você ganhou a partida! :D")
-                    
+                    if (tabuleiro_espelho_jogador[linha][coluna] == " "):
+                        tabuleiro_espelho_jogador[linha][coluna] = tabuleiro_jogador[linha][coluna]
+                        acertou = True
+                        navios_bot += 1
+
+            print("Tabuleiro espelho inimigo")
+            tb.imprimir_tabuleiro_bonito(tabuleiro_espelho_inimigo)
+            print("\nNavios derrubados: ", navios_jogador)
+
+            celula = input("Selecione uma célula (ex: A1): ").strip().upper()
+            x = ord(celula[0]) - 65 
+            y = int(celula[1])
+                
+            if (tabuleiro_inimigo[y][x] == " "):
+                tabuleiro_espelho_inimigo[y][x] = "O"
+            else:
+                if tabuleiro_espelho_inimigo[y][x] == " ":  # ele verifica novamente que está vazio, para evitar que seja marcado novamente e conte pontos
+                    tabuleiro_espelho_inimigo[y][x] = tabuleiro_inimigo[y][x]
+                    navios_jogador += 1     
+
+        if navios_bot == 22 and navios_jogador == 22:
+            print("Empate!") 
+        elif navios_bot == 22:
+            print("O bot ganhou a partida D:")
+        elif navios_jogador == 22:
+            print("Parabéns você ganhou a partida! :D")
+
     elif escolha == 2:
         ...
 
     elif escolha == 3:
         ...
-
